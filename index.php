@@ -3,14 +3,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>📚 Smart Library Portal</title>
+  <title>Smart Library Portal</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <!-- 🧭 Navbar -->
   <header class="navbar">
-    <h1>📚 Smart Library Portal</h1>
+    <h1>Smart Library Portal</h1>
     <nav>
       <a href="index.php">Home</a>
       <a href="#">My Requests</a>
@@ -26,22 +26,27 @@
 
   <!-- 🏆 Trending Books -->
   <section class="books-section">
-    <h2>🔥 Trending & Available Books</h2>
+    <h2>Trending & Available Books</h2>
     <div class="books-container" id="booksContainer">
       <?php
-      $query = mysqli_query($conn, "SELECT * FROM books ORDER BY id DESC");
+      $query = mysqli_query($conn, "SELECT * FROM books ORDER BY id ASC");
       while ($row = mysqli_fetch_assoc($query)) {
-        $statusClass = ($row['status'] === 'available') ? 'status-available' : 'status-issued';
-        echo "
-          <div class='book-card'>
-            <img src='images/{$row['cover']}' alt='{$row['title']}'>
-            <h3>{$row['title']}</h3>
-            <p>by {$row['author']}</p>
-            <span class='$statusClass'>{$row['status']}</span>
-            <button onclick=\"requestBook('{$row['title']}')\">Request</button>
-          </div>
-        ";
-      }
+  $statusClass = ($row['status'] === 'available') ? 'status-available' : 'status-issued';
+  $coverPath = !empty($row['cover']) && file_exists("uploads/" . $row['cover'])
+      ? "uploads/" . $row['cover']
+      : "images/default.jpg";
+
+  echo "
+    <div class='book-card'>
+      <img src='$coverPath' alt='{$row['title']}'>
+      <h3>{$row['title']}</h3>
+      <p>by {$row['author']}</p>
+      <span class='$statusClass'>{$row['status']}</span>
+      <button onclick=\"requestBook('{$row['title']}')\">Request</button>
+    </div>
+  ";
+}
+
       ?>
     </div>
   </section>

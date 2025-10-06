@@ -29,35 +29,30 @@
 </html>
 
 <?php
-include('../db.php'); // ensure DB connection
+include('../db.php');
 
 if (isset($_POST['add'])) {
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $category = $_POST['category'];
+    $title = mysqli_real_escape_string($conn, $_POST['title']);
+    $author = mysqli_real_escape_string($conn, $_POST['author']);
+    $category = mysqli_real_escape_string($conn, $_POST['category']);
     $status = 'available';
-
-    // Handle cover image upload
     $cover = null;
+
+    // Upload cover
     if (!empty($_FILES['cover']['name'])) {
         $target_dir = "../uploads/";
-        $cover = basename($_FILES["cover"]["name"]);
+        $cover = time() . '_' . basename($_FILES["cover"]["name"]); // unique name
         $target_file = $target_dir . $cover;
 
-        // Move uploaded file
-        if (move_uploaded_file($_FILES["cover"]["tmp_name"], $target_file)) {
-            // File uploaded successfully
-        } else {
+        if (!move_uploaded_file($_FILES["cover"]["tmp_name"], $target_file)) {
             echo "<script>alert('Error uploading cover image.');</script>";
+            $cover = null;
         }
     }
 
-    // Insert into database
-    $conn->query("INSERT INTO books (title, author, category, status, cover) 
+    $conn->query("INSERT INTO books (title, author, category, status, cover)
                   VALUES ('$title', '$author', '$category', '$status', '$cover')");
-
     header("Location: dashboard.php");
     exit;
 }
 ?>
-

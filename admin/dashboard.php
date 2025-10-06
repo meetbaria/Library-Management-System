@@ -2,7 +2,7 @@
 include('../db.php');
 
 // Fetch all books
-$books = $conn->query("SELECT * FROM books ORDER BY id DESC");
+$books = $conn->query("SELECT * FROM books ORDER BY id ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,6 +149,7 @@ $books = $conn->query("SELECT * FROM books ORDER BY id DESC");
     <table>
       <tr>
         <th>ID</th>
+        <th>Cover</th>
         <th>Book Title</th>
         <th>Author</th>
         <th>Category</th>
@@ -159,6 +160,12 @@ $books = $conn->query("SELECT * FROM books ORDER BY id DESC");
       <?php while ($row = $books->fetch_assoc()) { ?>
         <tr>
           <td><?= $row['id'] ?></td>
+          <td>
+  <?php if (!empty($row['cover'])) { ?>
+      <img src="../uploads/<?= $row['cover'] ?>" width="50">
+  <?php } else { echo "No Cover"; } ?>
+</td>
+
           <td><?= htmlspecialchars($row['title']) ?></td>
           <td><?= htmlspecialchars($row['author']) ?></td>
           <td><?= htmlspecialchars($row['category']) ?></td>
@@ -176,7 +183,7 @@ $books = $conn->query("SELECT * FROM books ORDER BY id DESC");
   </div>
 
   <footer>
-    &copy; <?= date('Y') ?> Library Management System | Designed by Admin
+    &copy; <?= date('Y') ?> Library Management System | Designed by Meet Baria
   </footer>
 </body>
 </html>
