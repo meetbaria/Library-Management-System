@@ -1,23 +1,24 @@
 <?php
 include 'db.php';
 
-$q = $_GET['q'] ?? '';
+$query = isset($_POST['query']) ? mysqli_real_escape_string($conn, $_POST['query']) : '';
+$sql = "SELECT * FROM books WHERE title LIKE '%$query%' OR author LIKE '%$query%'";
+$result = mysqli_query($conn, $sql);
 
-$sql = "SELECT * FROM books WHERE title LIKE '%$q%' OR author LIKE '%$q%'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<table><tr><th>Title</th><th>Author</th><th>Category</th><th>Status</th></tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>{$row['title']}</td>
-                <td>{$row['author']}</td>
-                <td>{$row['category']}</td>
-                <td>{$row['status']}</td>
-              </tr>";
-    }
-    echo "</table>";
+if (mysqli_num_rows($result) > 0) {
+  while ($row = mysqli_fetch_assoc($result)) {
+    $statusClass = ($row['status'] === 'available') ? 'status-available' : 'status-issued';
+    echo "
+      <div class='book-card'>
+        <img src='images/{$row['cover']}' alt='{$row['title']}'>
+        <h3>{$row['title']}</h3>
+        <p>by {$row['author']}</p>
+        <span class='$statusClass'>{$row['status']}</span>
+        <button onclick=\"requestBook('{$row['title']}')\">Request</button>
+      </div>
+    ";
+  }
 } else {
-    echo "<p>No books found</p>";
+  echo "<p style='text-align:center;color:#555;'>No books found.</p>";
 }
 ?>

@@ -1,58 +1,125 @@
 body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f4f7fa;
   margin: 0;
-  padding: 0;
-}
-
-.container {
-  width: 80%;
-  margin: 50px auto;
-  background: #fff;
-  padding: 20px 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-h1,
-h2 {
-  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f7fb;
   color: #333;
 }
 
-input,
-select,
-button {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #3b5998, #2b4789);
+  color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar h1 {
+  margin: 0;
+  font-size: 22px;
+}
+.navbar nav a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.navbar nav a:hover {
+  text-decoration: underline;
 }
 
-button,
-.btn {
-  background: #4caf50;
-  color: white;
+/* Search */
+.search-section {
+  text-align: center;
+  padding: 40px 0;
+  background: #eaf0ff;
+}
+.search-section h2 {
+  margin-bottom: 10px;
+  color: #2b4789;
+}
+.search-section input {
+  width: 60%;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+.search-section input:focus {
+  border-color: #3b5998;
+  box-shadow: 0 0 5px #3b5998;
+}
+
+/* Books Section */
+.books-section {
+  padding: 40px;
+}
+.books-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #3b5998;
+}
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.book-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.book-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.book-card h3 {
+  margin: 10px 0 5px;
+}
+.book-card p {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}
+.book-card .status-available {
+  display: inline-block;
+  margin: 5px 0;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: #c7ffd1;
+  color: #0b7a00;
+  font-size: 13px;
+}
+.book-card .status-issued {
+  display: inline-block;
+  margin: 5px 0;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: #ffdad1;
+  color: #b30000;
+  font-size: 13px;
+}
+.book-card button {
+  background: #3b5998;
+  color: #fff;
   border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin-top: 10px;
   cursor: pointer;
   transition: 0.3s;
 }
-
-button:hover,
-.btn:hover {
-  background: #43a047;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th,
-td {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  text-align: left;
+.book-card button:hover {
+  background: #2b4789;
 }
